@@ -13,7 +13,7 @@ func main() {
     log.Println("Application started")
 
     cpuFlag := flag.Int("cpu", 10, "Total available CPU")
-    bidsFlag := flag.String("bids", "", "Workloads in format name:cpu:memory:priority,name:cpu:memory:priority")
+    bidsFlag := flag.String("bids", "", "Workloads in format name:cpu:priority,name:cpu:priority")
     portFlag := flag.Int("port", 8080, "Server port")
 
     flag.Parse()
@@ -28,7 +28,7 @@ func main() {
         for _, w := range workloads {
             parts := strings.Split(w, ":")
             if len(parts) != 4 {
-                fmt.Println("Invalid workload format. Expected: name:cpu:memory:priority")
+                fmt.Println("Invalid workload format. Expected: name:cpu:priority")
                 return
             }
 
@@ -38,13 +38,7 @@ func main() {
                 return
             }
 
-            memory, err := strconv.Atoi(parts[2])
-            if err != nil {
-                fmt.Println("Error parsing Memory:", err)
-                return
-            }
-
-            priority, err := strconv.Atoi(parts[3])
+            priority, err := strconv.Atoi(parts[2])
             if err != nil {
                 fmt.Println("Error parsing Priority:", err)
                 return
@@ -53,7 +47,6 @@ func main() {
             bids = append(bids, internal.Workload{
                 Name:     parts[0],
                 CPU:      cpu,
-                Memory:   memory,
                 Priority: priority,
             })
         }

@@ -1,9 +1,8 @@
 package internal
 
-type Workload struct {
-	Name     string
-	CPU      int
-	Memory   int
-	Priority int
-}
 
+type Workload struct {
+    Name     string
+    Priority int 
+    CPU      int
+}
